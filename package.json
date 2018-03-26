@@ -1,0 +1,32 @@
+{
+  "name": "serverless-spa-deploy",
+  "version": "1.0.0",
+  "description": "Deploy a single page app to an S3 bucket",
+  "author": "John Gilbert <john.gilbert@danteinc.com> (danteinc.com)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanteInc/serverless-spa-deploy.git"
+  },
+  "keywords": [
+    "serverless",
+    "serverless plugin",
+    "s3",
+    "aws",
+    "amazon web services",
+    "serverless.com"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint index.js",
+    "test": "npm run lint"
+  },
+  "dependencies": {
+    "glob-all": "^3.1.0",
+    "lodash": "^4.13.1",
+    "mime-types": "^2.1.18"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1"
+  }
+}

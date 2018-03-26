@@ -1,2 +1,35 @@
 # serverless-spa-deploy
+
 Serverless plugin to deploy a single page app to an S3 bucket
+
+* Uploads files to bucket after deploy
+* Infers bucket name
+  * Assumes a single bucket per app
+* Empties bucket before stack remove
+  * Supports versioned bucket
+* Supports CacheControl header
+
+## Default Configuration
+```
+custom:
+  spa:
+    websiteBucketNameOutputRef: WebsiteBucketName
+    prefix: ''
+    acl: public-read
+    files:
+      - source: ./build
+        globs: '**/*'
+```
+
+## Typical Configuration
+```
+custom:
+  spa:
+    files:
+      - globs: '**/*'
+        headers:
+          cache-control: max-age=31536000 # 1 year
+      - globs: 'index.html'
+        headers:
+          cache-control: max-age=300 # 5 minutes
+```
