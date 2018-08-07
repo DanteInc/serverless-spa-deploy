@@ -81,7 +81,7 @@ const deploy = (serverless) => {
               .map((filename) => {
                 const body = fs.readFileSync(path.join(opt.source, filename));
                 const type = mime.lookup(filename) || opt.defaultContentType;
-                const key = path.join(config.prefix, filename);
+                const key = path.posix.join(config.prefix, filename);
 
                 serverless.cli.log(`File: ${filename} (${type})`);
 
