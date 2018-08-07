@@ -28,8 +28,8 @@ custom:
     files:
       - globs: '**/*'
         headers:
-          cache-control: max-age=31536000 # 1 year
+          CacheControl: max-age=31536000 # 1 year
       - globs: 'index.html'
         headers:
-          cache-control: max-age=300 # 5 minutes
+          CacheControl: max-age=300 # 5 minutes
 ```
