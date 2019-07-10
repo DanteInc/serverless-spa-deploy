@@ -80,8 +80,8 @@ const deploy = (serverless) => {
             glob.sync(opt.globs, { nodir: true, cwd: opt.source })
               .map((filename) => {
                 const body = fs.readFileSync(path.join(opt.source, filename));
-                const type = mime.lookup(filename) || opt.defaultContentType;
-                const key = path.posix.join(config.prefix, filename);
+                const type = opt.headers.ContentType || mime.lookup(filename) || opt.defaultContentType;
+                const key = opt.key || path.posix.join(config.prefix, filename);
 
                 serverless.cli.log(`File: ${filename} (${type})`);
 
