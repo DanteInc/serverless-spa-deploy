@@ -28,7 +28,7 @@ custom:
     files:
       - globs: '**/*'
         headers:
-          CacheControl: max-age=31536000 # 1 year
+          CacheControl: public,max-age=31536000,immutable # 1 year or more
       - globs: 'index.html'
         headers:
           CacheControl: max-age=300 # 5 minutes
