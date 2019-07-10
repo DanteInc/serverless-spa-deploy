@@ -1,6 +1,6 @@
 {
   "name": "serverless-spa-deploy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Deploy a single page app to an S3 bucket",
   "author": "John Gilbert <john.gilbert@danteinc.com> (danteinc.com)",
   "license": "MIT",
