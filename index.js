@@ -1,5 +1,3 @@
-'use strict';
-
 const _ = require('lodash');
 const glob = require('glob-all');
 const fs = require('fs');
@@ -90,11 +88,11 @@ const deploy = (serverless) => {
 
                 const params = Object.assign({
                   ACL: config.acl,
-                  Body: config.gzip?.includes(ext) ? zlib.gzipSync(body) : body,
+                  Body: (config.gzip && config.gzip.includes(ext)) ? zlib.gzipSync(body) : body,
                   Bucket: websiteBucketName,
                   Key: key,
                   ContentType: type,
-                  ContentEncoding: config.gzip?.includes(ext) ? 'gzip' : undefined,
+                  ContentEncoding: (config.gzip && config.gzip.includes(ext)) ? 'gzip' : undefined,
                 }, opt.headers);
 
                 // console.log('params: %j', _.omit(params, 'Body'));
