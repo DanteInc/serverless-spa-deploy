@@ -82,18 +82,19 @@ const deploy = (serverless) => {
             glob.sync(opt.globs, { nodir: true, cwd: opt.source })
               .map((filename) => {
                 const body = fs.readFileSync(path.join(opt.source, filename));
+                const ext = filename.split('.').pop();
                 const type = opt.headers.ContentType || mime.lookup(filename) || opt.defaultContentType;
                 const key = opt.key || path.posix.join(config.prefix, filename);
 
-                serverless.cli.log(`File: ${filename} (${type})`);
+                serverless.cli.log(`File: ${filename} (${type}) (${ext})`);
 
                 const params = Object.assign({
                   ACL: config.acl,
-                  Body: config.gzip?.includes(type) ? zlib.gzipSync(body) : body,
+                  Body: config.gzip?.includes(ext) ? zlib.gzipSync(body) : body,
                   Bucket: websiteBucketName,
                   Key: key,
                   ContentType: type,
-                  ContentEncoding: config.gzip?.includes(type) ? 'gzip' : undefined,
+                  ContentEncoding: config.gzip?.includes(ext) ? 'gzip' : undefined,
                 }, opt.headers);
 
                 // console.log('params: %j', _.omit(params, 'Body'));
