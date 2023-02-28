@@ -1,8 +1,7 @@
-'use strict';
-
 const _ = require('lodash');
 const glob = require('glob-all');
 const fs = require('fs');
+const zlib = require('zlib');
 const path = require('path');
 const mime = require('mime-types');
 
@@ -56,7 +55,8 @@ const deploy = (serverless) => {
     { // defaults
       websiteBucketNameOutputRef: 'WebsiteBucketName',
       prefix: '',
-      acl: 'public-read',
+      acl: 'private',
+      gzip: ['js', 'map'],
       files: [
         DEFAULT_FILES,
       ]
@@ -80,17 +80,19 @@ const deploy = (serverless) => {
             glob.sync(opt.globs, { nodir: true, cwd: opt.source })
               .map((filename) => {
                 const body = fs.readFileSync(path.join(opt.source, filename));
+                const ext = filename.split('.').pop();
                 const type = opt.headers.ContentType || mime.lookup(filename) || opt.defaultContentType;
                 const key = opt.key || path.posix.join(config.prefix, filename);
 
-                serverless.cli.log(`File: ${filename} (${type})`);
+                serverless.cli.log(`File: ${filename} (${type}) (${ext})`);
 
                 const params = Object.assign({
                   ACL: config.acl,
-                  Body: body,
+                  Body: (config.gzip && config.gzip.includes(ext)) ? zlib.gzipSync(body) : body,
                   Bucket: websiteBucketName,
                   Key: key,
-                  ContentType: type
+                  ContentType: type,
+                  ContentEncoding: (config.gzip && config.gzip.includes(ext)) ? 'gzip' : undefined,
                 }, opt.headers);
 
                 // console.log('params: %j', _.omit(params, 'Body'));

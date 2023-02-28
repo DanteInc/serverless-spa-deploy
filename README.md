@@ -15,7 +15,9 @@ custom:
   spa:
     websiteBucketNameOutputRef: WebsiteBucketName
     prefix: ''
-    acl: public-read
+    acl: private
+    gzip: 
+      - js
     files:
       - source: ./build
         globs: '**/*'
