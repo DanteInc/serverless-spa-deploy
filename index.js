@@ -250,6 +250,10 @@ const removeVersions = (serverless) => {
 };
 
 const getWebsiteBucketName = (serverless, config) => {
+  if (config.websiteBucketName) {
+    return config.websiteBucketName;
+  }
+
   const awsInfo = _.find(serverless.pluginManager.getPlugins(), (plugin) => {
     return plugin.constructor.name === 'AwsInfo';
   });
